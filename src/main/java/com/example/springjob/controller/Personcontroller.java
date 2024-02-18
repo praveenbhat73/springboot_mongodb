@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import org.bson.Document;
 import java.util.List;
 
 @RestController
@@ -48,10 +49,32 @@ public class Personcontroller {
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "5") Integer size
     ) {
+
         Pageable pageable
                 = PageRequest.of(page,size);
+        /*
+        This line creates a Pageable object which represents pagination information,
+        like which page of results to return and how many results per page.
+         It's created using the PageRequest.of method with the page and size parameters provided.
+         */
         return ps.search(name,minAge,maxAge,city,pageable);
     }
+    /*
+    what does above function does
+    getmapping api endpoint is search
+    which returns page of person type and accepts the requestparam and everything except page and size set to false
+
+
+     */
+    @GetMapping("/oldperson")
+    public List<Document> getoldpersonbycity(){
+        return ps.getoldperson();
+    }
+    @GetMapping("/population")
+    public List<Document> getpop(){
+        return ps.getpopulation();
+    }
+
 
 
 }
